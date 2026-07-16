@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ඉබ්බාගමුව ප්‍රාදේශීය සභාව - පුද්ගලික ලිපි ලේඛන කළමනාකරණය</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Sinhala:wght@500;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#7A2331;
+    --maroon-dark:#5A1922;
+    --gold:#C08A28;
+    --gold-light:#E8C468;
+    --cream:#FAF6EE;
+    --paper:#FFFFFF;
+    --ink:#2B2420;
+    --ink-soft:#6B6058;
+    --line:#E4D9C6;
+    --green:#3F7A4E;
+    --red:#B23A3A;
+    --shadow: 0 8px 24px rgba(90,25,34,0.08);
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Noto Sans Sinhala','Segoe UI',sans-serif;}
+  h1,h2,h3,.display{font-family:'Noto Serif Sinhala','Fraunces',serif;}
+  ::selection{background:var(--gold-light);}
+  button{font-family:inherit;cursor:pointer;}
+  input,select,textarea{font-family:inherit;}
+
+  /* ---- Login ---- */
+  #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(192,138,40,0.10), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(122,35,49,0.10), transparent 40%),
+      var(--cream);
+  }
+  .seal{width:64px;height:64px;border-radius:50%;background:conic-gradient(from 180deg, var(--gold), var(--maroon), var(--gold));display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:var(--shadow);}
+  .seal span{width:52px;height:52px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--maroon);font-weight:700;font-family:'Noto Serif Sinhala',serif;}
+  .loginCard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:40px 36px;width:100%;max-width:400px;box-shadow:var(--shadow);text-align:center;}
+  .loginCard h1{font-size:20px;margin:0 0 2px;color:var(--maroon-dark);}
+  .loginCard .sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:26px;}
+  .field{text-align:left;margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px;font-weight:600;}
+  .field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;font-size:14.5px;background:#fff;color:var(--ink);transition:border .15s;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border-radius:8px;border:none;font-size:14px;font-weight:600;transition:transform .1s, box-shadow .15s;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--maroon);color:#fff;width:100%;}
+  .btn-primary:hover{background:var(--maroon-dark);}
+  .btn-gold{background:var(--gold);color:#3a2600;}
+  .btn-gold:hover{background:var(--gold-light);}
+  .btn-ghost{background:transparent;color:var(--maroon);border:1.5px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--maroon);}
+  .btn-danger{background:#fff;color:var(--red);border:1.5px solid #ecc;}
+  .btn-danger:hover{background:#fdf0f0;}
+  .btn-sm{padding:6px 11px;font-size:12.5px;border-radius:6px;}
+  .loginErr{color:var(--red);font-size:13px;margin-top:10px;min-height:16px;}
+  .hint{font-size:11.5px;color:var(--ink-soft);margin-top:18px;line-height:1.6;}
+
+  /* ---- App shell ---- */
+  #app{display:none;min-height:100vh;}
+  .shell{display:flex;min-height:100vh;}
+  .sidebar{width:230px;background:linear-gradient(180deg,var(--maroon-dark),var(--maroon));color:#fff;padding:22px 16px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:26px;padding:0 4px;}
+  .brand .mark{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--maroon-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Noto Serif Sinhala',serif;flex-shrink:0;}
+  .brand div{font-size:12.5px;line-height:1.35;font-weight:600;}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.82);font-size:13.5px;font-weight:600;margin-bottom:4px;transition:background .15s;}
+  .navitem svg{width:16px;height:16px;flex-shrink:0;}
+  .navitem:hover{background:rgba(255,255,255,.08);color:#fff;}
+  .navitem.active{background:rgba(255,255,255,.16);color:#fff;}
+  .navbadge{margin-left:auto;background:var(--gold);color:#3a2600;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:20px;}
+  .navsep{height:1px;background:rgba(255,255,255,.14);margin:14px 0;}
+  .userbox{margin-top:auto;padding-top:16px;font-size:12px;color:rgba(255,255,255,.7);}
+
+  .main{flex:1;min-width:0;padding:26px 32px 60px;}
+  .topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:14px;flex-wrap:wrap;}
+  .topbar h1{font-size:21px;margin:0 0 3px;color:var(--maroon-dark);}
+  .topbar .sub{font-size:13px;color:var(--ink-soft);}
+
+  .alertBanner{background:#fff6e6;border:1.5px solid var(--gold);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;}
+  .alertBanner svg{width:20px;height:20px;flex-shrink:0;color:var(--gold);margin-top:1px;}
+  .alertBanner b{color:var(--maroon-dark);}
+  .alertBanner ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:22px;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);}
+  .card .num{font-size:26px;font-weight:700;color:var(--maroon-dark);font-family:'Noto Serif Sinhala',serif;}
+  .card .lbl{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:20px 22px;margin-bottom:20px;}
+  .panelHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap;}
+  .panelHead h2{font-size:16px;margin:0;color:var(--maroon-dark);}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+  .toolbar input[type=text],.toolbar select{padding:8px 11px;border:1.5px solid var(--line);border-radius:8px;font-size:13.5px;}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft);border-bottom:2px solid var(--line);padding:8px 10px;cursor:pointer;white-space:nowrap;}
+  td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:hover td{background:#fbf4e8;}
+  .tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;}
+  .tag-soon{background:#fdeee0;color:#a3540f;}
+  .tag-ok{background:#e7f3e9;color:var(--green);}
+
+  .folderTab{display:inline-flex;align-items:center;gap:6px;background:var(--gold-light);color:#4a3300;font-weight:700;font-size:11.5px;padding:3px 10px 3px 8px;border-radius:0 8px 8px 0;border-left:3px solid var(--gold);}
+
+  .modalOverlay{display:none;position:fixed;inset:0;background:rgba(43,36,32,.45);align-items:center;justify-content:center;z-index:50;padding:20px;}
+  .modalOverlay.show{display:flex;}
+  .modal{background:var(--paper);border-radius:16px;max-width:720px;width:100%;max-height:88vh;overflow-y:auto;padding:26px 28px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+  .modal h2{margin-top:0;color:var(--maroon-dark);font-size:18px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr;}}
+  .modalActions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;border-top:1px solid var(--line);padding-top:16px;}
+
+  .profileSheet{border:1.5px solid var(--line);border-radius:12px;padding:22px;background:#fffdf8;}
+  .profileSheet h3{border-bottom:2px solid var(--gold);padding-bottom:8px;margin-top:0;color:var(--maroon-dark);}
+  .profileRow{display:flex;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13.5px;}
+  .profileRow .k{width:230px;flex-shrink:0;color:var(--ink-soft);font-weight:600;}
+  .profileRow .v{color:var(--ink);}
+
+  .empty{text-align:center;padding:40px 20px;color:var(--ink-soft);}
+  .toast{position:fixed;bottom:22px;right:22px;background:var(--maroon-dark);color:#fff;padding:12px 18px;border-radius:10px;font-size:13.5px;box-shadow:var(--shadow);z-index:100;opacity:0;transform:translateY(10px);transition:all .25s;}
+  .toast.show{opacity:1;transform:translateY(0);}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:20px;background:#eee;color:#666;}
+  .pill.admin{background:#f3e6ea;color:var(--maroon);}
+  .pill.officer{background:#e6eef3;color:#2b5a7a;}
+
+  @media(max-width:820px){
+    .shell{flex-direction:column;}
+    .sidebar{width:100%;height:auto;position:static;display:flex;flex-wrap:wrap;gap:4px;padding:14px;}
+    .brand{width:100%;margin-bottom:10px;}
+    .userbox{display:none;}
+    .main{padding:20px 16px 50px;}
+  }
+  @media print{
+    .sidebar,.topbar,.toolbar,.cards,.alertBanner,.noPrint{display:none !important;}
+    body{background:#fff;}
+    .panel{box-shadow:none;border:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="loginCard">
+    <div class="seal"><span>ඉ</span></div>
+    <h1>ඉබ්බාගමුව ප්‍රාදේශීය සභාව</h1>
+    <div class="sub">පුද්ගලික ලිපි ලේඛන කළමනාකරණ පද්ධතිය</div>
+    <div class="field">
+      <label>පරිශීලක නාමය</label>
+      <input type="text" id="loginUser" autocomplete="username" placeholder="Username">
+    </div>
+    <div class="field">
+      <label>මුරපදය</label>
+      <input type="password" id="loginPass" autocomplete="current-password" placeholder="Password">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">පිවිසෙන්න / Login</button>
+    <div class="loginErr" id="loginErr"></div>
+    <div class="hint">පළමු වරට භාවිතා කරන්නේ නම්: <b>admin</b> / <b>admin123</b> මගින් පිවිසී වහාම මුරපදය වෙනස් කරන්න.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="shell">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="mark">ඉ</div>
+        <div>ඉබ්බාගමුව ප්‍රා.ස.<br><span style="font-weight:400;opacity:.8">ලිපි ලේඛන පද්ධතිය</span></div>
+      </div>
+      <div class="navitem active" data-view="dashboard" onclick="setView('dashboard')">📊 ප්‍රධාන පුවරුව</div>
+      <div class="navitem" data-view="employees" onclick="setView('employees')">🗂️ සේවක ලේඛන</div>
+      <div class="navitem" data-view="notifications" onclick="setView('notifications')">🔔 දැනුම්දීම් <span class="navbadge" id="notifCountBadge" style="display:none">0</span></div>
+      <div class="navitem" data-view="reports" onclick="setView('reports')">📁 වාර්තා</div>
+      <div class="navsep"></div>
+      <div class="navitem" data-view="users" id="navUsers" onclick="setView('users')">👤 පරිශීලක කළමනාකරණය</div>
+      <div class="navitem" data-view="auditlog" id="navAudit" onclick="setView('auditlog')">📜 කි‍්‍රයා සටහන</div>
+      <div class="navitem" data-view="account" onclick="setView('account')">⚙️ මගේ ගිණුම</div>
+      <div class="navitem" onclick="logout()">🚪 ඉවත් වන්න</div>
+      <div class="userbox" id="userbox"></div>
+    </div>
+
+    <div class="main">
+      <div id="viewRoot"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modalOverlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   STORAGE HELPERS  (Google Sheets backend via Apps Script Web App)
+========================================================= */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmgRrspCQYn2DYQNHWqGUt2FN2peuy0bQfJXYVmEFyGh6yNc5nqrbh1OqwK_GQn1MJ/exec';
+const K_USERS = 'lipilekhana:users';
+const K_EMP = 'lipilekhana:employees';
+const K_AUDIT = 'lipilekhana:auditlog';
+const K_POSITIONS = 'lipilekhana:positions';
+const DEFAULT_POSITIONS = ['කළමනාකරණ සහකාර','සංවර්ධන නිලධාරි','ආයුර්වේද වෛද්‍ය','තාක්ෂණ නිලධාරි(TO)','වැඩ පරිපාලක','K.K.S','පෙරපාසල් පාලිකා','පෙර පාසල් සහයක','පුස්ථකාලාධිපති','පුස්ථකාල සහයක','ආදාහනාගාරපාලක','නගරශාලා පාලක','රියදුරු','මුරකරු','ක්ෂේත්‍ර කම්කරු','සෞඛ්‍ය කම්කරු'];
+
+async function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+// Calls the Apps Script backend. Uses text/plain content-type so the browser
+// treats this as a "simple request" and skips the CORS preflight (which
+// Apps Script web apps don't handle).
+async function callBackend_(payload){
+  const res = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  });
+  if(!res.ok) throw new Error('Backend HTTP ' + res.status);
+  return await res.json();
+}
+
+async function storeGet(key){
+  for(let attempt=0; attempt<2; attempt++){
+    try{
+      const r = await callBackend_({action:'get', key});
+      return (r && r.value != null) ? JSON.parse(r.value) : null;
+    }catch(e){
+      if(attempt===0) await sleep(1200);
+      else { console.warn('storage get failed', e); STORAGE_OK = false; return null; }
+    }
+  }
+}
+async function storeSet(key, val){
+  for(let attempt=0; attempt<2; attempt++){
+    try{
+      const r = await callBackend_({action:'set', key, value: JSON.stringify(val)});
+      if(r && r.success){ STORAGE_OK = true; return r; }
+      throw new Error('Backend did not confirm success');
+    }catch(e){
+      if(attempt===0) await sleep(1200);
+      else { console.error('storage set failed', e); STORAGE_OK = false; return null; }
+    }
+  }
+}
+
+async function sha256(str){
+  try{
+    if(window.crypto && window.crypto.subtle){
+      const enc = new TextEncoder().encode(str);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+  }catch(e){ /* fall through to fallback hash below */ }
+  // Fallback (used only if crypto.subtle isn't available in this environment)
+  let h = 0;
+  for(let i=0;i<str.length;i++){ h = ((h<<5)-h) + str.charCodeAt(i); h |= 0; }
+  return 'fb' + Math.abs(h).toString(16) + str.length;
+}
+function uid(){ return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+let STORAGE_OK = true;
+
+/* =========================================================
+   STATE
+========================================================= */
+let CURRENT_USER = null; // {username, role, displayName}
+let USERS = [];
+let EMPLOYEES = [];
+let AUDIT = [];
+let POSITIONS = DEFAULT_POSITIONS.slice();
+let currentView = 'dashboard';
+let sortState = {col:'name', dir:1};
+let searchTerm = '';
+let categoryFilter = 'all';
+
+const FIELD_DEFS = [
+  {k:'staffCategory', label:'සේවක වර්ගය', select:true, options:[['regular','ස්ථිර / සාමාන්‍ය සේවක'],['junior','කණිෂ්ඨ කාර්ය මණ්ඩලය']]},
+  {k:'fileNo', label:'ලිපි ලේඛන අංකය'},
+  {k:'name', label:'නම'},
+  {k:'position', label:'තනතුර', customPosition:true},
+  {k:'grade', label:'ශ්‍රේණිය'},
+  {k:'nic', label:'ජා.හැ.අංකය'},
+  {k:'phone', label:'දුරකථන අංකය'},
+  {k:'address', label:'ලිපිනය'},
+  {k:'incrementDate', label:'වැටුප් වර්ධක දිනය', date:true, regularOnly:true},
+  {k:'appointmentDate', label:'පත්වීම් දිනය', date:true, regularOnly:true},
+  {k:'confirmationDate', label:'ස්ථිර කළ දිනය', date:true, regularOnly:true},
+  {k:'tamilProficiencyDate', label:'දෙමළ භාෂා ප්‍රවීණතා විභාග දිනය', date:true, regularOnly:true, withDoneCheckbox:true},
+  {k:'wopNumber', label:'වැන්දඹු අනාථ විරාම වැටුප් අංකය', regularOnly:true},
+  {k:'retirementDate', label:'විශ්‍රාම යා යුතු දිනය', date:true, regularOnly:true},
+  {k:'servicePeriodDate', label:'මෙම ආයතනයේ වැඩ බැලූ දිනය', date:true, regularOnly:true},
+  {k:'dailyAppointmentDate', label:'දෛනික පත්වීම් දිනය', date:true, juniorOnly:true},
+  {k:'notes', label:'වෙනත් සටහන්'},
+];
+function toRoman(num){
+  const map = [[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+  let res='', n=num;
+  for(const [val,sym] of map){ while(n>=val){ res+=sym; n-=val; } }
+  return res || String(num);
+}
+
+/* =========================================================
+   BOOT
+========================================================= */
+async function ensureUsersLoaded(){
+  // Try to read users from the Google Sheets backend. If that fails (e.g. the
+  // Apps Script URL is wrong, not deployed with "Anyone" access, or offline),
+  // fall back to an in-memory admin so the app is still usable, and flag it clearly.
+  const stored = await storeGet(K_USERS);
+  if(stored && stored.length){ USERS = stored; return; }
+  const hash = await sha256('admin123');
+  USERS = [{username:'admin', passHash:hash, role:'admin', displayName:'පරිපාලක', mustChangePassword:true}];
+  if(STORAGE_OK){
+    const result = await storeSet(K_USERS, USERS);
+    if(!result) STORAGE_OK = false;
+  }
+}
+
+(async function init(){
+  await ensureUsersLoaded();
+  if(!STORAGE_OK){
+    const hint = document.querySelector('.hint');
+    hint.innerHTML = '⚠️ Google Sheets backend එකට සම්බන්ධ විය නොහැක. Apps Script Web App URL එක නිවැරදිද, "Who has access: Anyone" ලෙස deploy කර තිබේද යන්න පරීක්ෂා කරන්න. දැනට දත්ත මෙම browser tab එකට පමණක් සීමා වේ.<br><br>පළමු වරට භාවිතා කරන්නේ නම්: <b>admin</b> / <b>admin123</b>';
+  }
+  document.getElementById('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+  document.getElementById('loginUser').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+})();
+
+async function doLogin(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginErr');
+  errEl.textContent = '';
+  if(!u || !p){ errEl.textContent = 'කරුණාකර පරිශීලක නාමය සහ මුරපදය යොදන්න.'; return; }
+  try{
+    const fresh = await storeGet(K_USERS);
+    if(fresh && fresh.length) USERS = fresh;
+  }catch(e){
+    console.warn('Could not refresh users from backend, using cached copy:', e);
+  }
+  const hash = await sha256(p);
+  const user = USERS.find(x=>x.username.toLowerCase()===u.toLowerCase() && x.passHash===hash);
+  if(!user){
+    errEl.textContent = STORAGE_OK
+      ? 'පරිශීලක නාමය හෝ මුරපදය වැරදියි.'
+      : 'පරිශීලක නාමය හෝ මුරපදය වැරදියි. (Backend සම්බන්ධ වී නොමැති නිසා පෙර session එකේ පරිශීලකයන් නැති විය හැක — admin/admin123 උත්සාහ කරන්න.)';
+    return;
+  }
+  CURRENT_USER = user;
+  await loadAllData();
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('navUsers').style.display = (user.role==='admin') ? '' : 'none';
+  document.getElementById('navAudit').style.display = (user.role==='admin') ? '' : 'none';
+  document.getElementById('userbox').innerHTML =
+    `<div style="font-weight:700;color:#fff">${escapeHtml(user.displayName)}</div>
+     <div class="pill ${user.role}">${user.role==='admin'?'පරිපාලක':'විෂය බාර නිලධාරී'}</div>`;
+  if(user.mustChangePassword){
+    setView('account');
+    toast('ආරක්ෂාව සඳහා පළමු පිවිසුමේදී මුරපදය වෙනස් කරන්න.');
+  } else {
+    setView('dashboard');
+  }
+  requestBrowserNotifPermission();
+}
+
+function logout(){
+  CURRENT_USER = null;
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+}
+
+async function loadAllData(){
+  EMPLOYEES = await storeGet(K_EMP) || [];
+  AUDIT = await storeGet(K_AUDIT) || [];
+  const storedPositions = await storeGet(K_POSITIONS);
+  if(storedPositions && storedPositions.length){ POSITIONS = storedPositions; }
+  else { POSITIONS = DEFAULT_POSITIONS.slice(); await storeSet(K_POSITIONS, POSITIONS); }
+}
+async function addPositionIfNew(pos){
+  if(!pos) return;
+  if(POSITIONS.some(p=>p.toLowerCase()===pos.toLowerCase())) return;
+  POSITIONS.push(pos);
+  await storeSet(K_POSITIONS, POSITIONS);
+}
+
+async function logAction(action, detail){
+  AUDIT.unshift({ts:Date.now(), user:CURRENT_USER.username, action, detail});
+  AUDIT = AUDIT.slice(0,300);
+  await storeSet(K_AUDIT, AUDIT);
+}
+
+/* =========================================================
+   DATE / NOTIFICATION LOGIC
+   (Increment date is an annual recurring date - month/day matters)
+========================================================= */
+function nextAnnualOccurrence(dateStr){
+  if(!dateStr) return null;
+  const d = new Date(dateStr+'T00:00:00');
+  if(isNaN(d)) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  let next = new Date(today.getFullYear(), d.getMonth(), d.getDate());
+  if(next < today) next = new Date(today.getFullYear()+1, d.getMonth(), d.getDate());
+  return next;
+}
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+
+function getIncrementAlerts(withinDays=2){
+  const today = new Date(); today.setHours(0,0,0,0);
+  return EMPLOYEES.map(e=>{
+    const next = nextAnnualOccurrence(e.incrementDate);
+    if(!next) return null;
+    const d = daysBetween(today, next);
+    return {emp:e, days:d, date:next};
+  }).filter(x=>x && x.days>=0 && x.days<=withinDays).sort((a,b)=>a.days-b.days);
+}
+function getUpcomingByField(field, withinDays, annual){
+  const today = new Date(); today.setHours(0,0,0,0);
+  return EMPLOYEES.map(e=>{
+    if(!e[field]) return null;
+    let target;
+    if(annual){ target = nextAnnualOccurrence(e[field]); }
+    else { target = new Date(e[field]+'T00:00:00'); }
+    if(!target || isNaN(target)) return null;
+    const d = daysBetween(today, target);
+    return {emp:e, days:d, date:target};
+  }).filter(x=>x && x.days>=0 && x.days<=withinDays).sort((a,b)=>a.days-b.days);
+}
+function getUpcomingFromList(listKey, withinDays){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const results = [];
+  EMPLOYEES.forEach(e=>{
+    (e[listKey]||[]).forEach((item, idx)=>{
+      if(!item || !item.date) return;
+      const d = new Date(item.date+'T00:00:00');
+      if(isNaN(d)) return;
+      const days = daysBetween(today, d);
+      if(days>=0 && days<=withinDays) results.push({emp:e, days, date:d, label:toRoman(item.no||idx+1)});
+    });
+  });
+  return results.sort((a,b)=>a.days-b.days);
+}
+function fmtDate(d){
+  if(!d) return '—';
+  if(typeof d === 'string') d = new Date(d+'T00:00:00');
+  return d.toLocaleDateString('si-LK', {year:'numeric',month:'short',day:'numeric'});
+}
+function requestBrowserNotifPermission(){
+  if('Notification' in window && Notification.permission === 'default'){
+    Notification.requestPermission().then(()=>{ fireBrowserNotifs(); });
+  } else {
+    fireBrowserNotifs();
+  }
+}
+function fireBrowserNotifs(){
+  if(!('Notification' in window) || Notification.permission !== 'granted') return;
+  const alerts = getIncrementAlerts(2);
+  alerts.forEach(a=>{
+    try{
+      new Notification('වැටුප් වර්ධක දිනය ළඟයි', {
+        body: `${a.emp.name} (${a.emp.fileNo||'-'}) ගේ වැටුප් වර්ධක දිනය දින ${a.days===0?'අදයි':a.days+'කින්'} - ${fmtDate(a.date)}`
+      });
+    }catch(e){}
+  });
+}
+
+/* =========================================================
+   VIEW ROUTER
+========================================================= */
+function setView(v){
+  currentView = v;
+  document.querySelectorAll('.navitem[data-view]').forEach(el=>{
+    el.classList.toggle('active', el.dataset.view===v);
+  });
+  render();
+}
+function render(){
+  const root = document.getElementById('viewRoot');
+  if(currentView==='dashboard') root.innerHTML = renderDashboard();
+  else if(currentView==='employees') root.innerHTML = renderEmployees();
+  else if(currentView==='notifications') root.innerHTML = renderNotifications();
+  else if(currentView==='reports') root.innerHTML = renderReports();
+  else if(currentView==='users') root.innerHTML = renderUsers();
+  else if(currentView==='auditlog') root.innerHTML = renderAudit();
+  else if(currentView==='account') root.innerHTML = renderAccount();
+  updateNotifBadge();
+}
+function updateNotifBadge(){
+  const n = getIncrementAlerts(2).length;
+  const el = document.getElementById('notifCountBadge');
+  if(n>0){ el.style.display='inline-block'; el.textContent = n; } else { el.style.display='none'; }
+}
+
+/* ---------- DASHBOARD ---------- */
+function renderDashboard(){
+  const incAlerts = getIncrementAlerts(2);
+  const retSoon = getUpcomingByField('retirementDate', 365, false);
+  const juniorCount = EMPLOYEES.filter(e=>e.staffCategory==='junior').length;
+  const barSoon = getUpcomingFromList('effBarExams', 60);
+
+  let banner = '';
+  if(incAlerts.length){
+    banner = `<div class="alertBanner">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+      <div><b>වැටුප් වර්ධක දින දැනුම්දීම</b> — විෂය බාර නිලධාරියාට යොමු කිරීමට අවශ්‍ය සේවකයන්:
+        <ul>${incAlerts.map(a=>`<li>${escapeHtml(a.emp.name)} (ලිපි අංක: ${escapeHtml(a.emp.fileNo||'-')}) — ${a.days===0?'<b>අදයි</b>':'දින '+a.days+'කින්'} (${fmtDate(a.date)})</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  }
+
+  return `
+    <div class="topbar">
+      <div><h1>ප්‍රධාන පුවරුව</h1><div class="sub">${escapeHtml(CURRENT_USER.displayName)} ලෙස ඔබ පිවිසී ඇත — ${fmtDate(new Date().toISOString().slice(0,10))}</div></div>
+      <button class="btn btn-gold btn-sm" onclick="openEmployeeModal()">+ නව සේවක ලේඛනයක්</button>
+    </div>
+    ${banner}
+    <div class="cards">
+      <div class="card"><div class="num">${EMPLOYEES.length}</div><div class="lbl">මුළු සේවක ලේඛන</div></div>
+      <div class="card"><div class="num">${incAlerts.length}</div><div class="lbl">දින 2ක් තුළ වැටුප් වර්ධක</div></div>
+      <div class="card"><div class="num">${barSoon.length}</div><div class="lbl">දින 60ක් තුළ කඩඉම් විභාග</div></div>
+      <div class="card"><div class="num">${retSoon.length}</div><div class="lbl">වසරක් තුළ විශ්‍රාම යාම</div></div>
+      <div class="card"><div class="num">${juniorCount}</div><div class="lbl">කණිෂ්ඨ කාර්ය මණ්ඩල සංඛ්‍යාව</div></div>
+    </div>
+    <div class="panel">
+      <div class="panelHead"><h2>ළඟදීම එන වැටුප් වර්ධක දින (දින 30ක් තුළ)</h2></div>
+      ${renderMiniList(getUpcomingByField('incrementDate',30,true))}
+    </div>
+    <div class="panel">
+      <div class="panelHead"><h2>ළඟදීම විශ්‍රාම යාම (දින 180ක් තුළ)</h2></div>
+      ${renderMiniList(getUpcomingByField('retirementDate',180,false))}
+    </div>
+  `;
+}
+function renderMiniList(list){
+  if(!list.length) return `<div class="empty">මෙම කාල සීමාව තුළ වාර්තා නොමැත.</div>`;
+  return `<table><thead><tr><th>නම</th><th>ලිපි ලේඛන අංකය</th><th>දිනය</th><th>ඉතිරි දින</th></tr></thead><tbody>
+    ${list.map(x=>`<tr><td>${escapeHtml(x.emp.name)}</td><td>${escapeHtml(x.emp.fileNo||'-')}</td><td>${fmtDate(x.date)}</td><td><span class="tag ${x.days<=2?'tag-soon':'tag-ok'}">${x.days===0?'අද':'දින '+x.days}</span></td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+/* ---------- NOTIFICATIONS VIEW ---------- */
+function renderNotifications(){
+  const inc2 = getIncrementAlerts(2);
+  const inc30 = getUpcomingByField('incrementDate',30,true);
+  const bar = getUpcomingFromList('effBarExams', 60);
+  const promo = getUpcomingFromList('promotions', 60);
+  const ret = getUpcomingByField('retirementDate',365,false);
+  return `
+    <div class="topbar"><div><h1>දැනුම්දීම්</h1><div class="sub">වැටුප් වර්ධක දින 2කින් ළඟා වීමට පෙර විෂය බාර නිලධාරියාට මෙහි හා බ්‍රව්සර දැනුම්දීම මගින් අනතුරු ඇඟවීම් ලැබේ.</div></div></div>
+    <div class="panel"><div class="panelHead"><h2>🔴 දින 2ක් තුළ - වැටුප් වර්ධක (ක්ෂණික ක්‍රියාමාර්ග අවශ්‍යයි)</h2></div>${renderMiniList(inc2)}</div>
+    <div class="panel"><div class="panelHead"><h2>🟡 දින 30ක් තුළ - වැටුප් වර්ධක</h2></div>${renderMiniList(inc30)}</div>
+    <div class="panel"><div class="panelHead"><h2>📘 දින 60ක් තුළ - කාර්යක්ෂමතා කඩඉම් විභාග</h2></div>${renderMiniList(bar)}</div>
+    <div class="panel"><div class="panelHead"><h2>🎖️ දින 60ක් තුළ - උසස්වීම්</h2></div>${renderMiniList(promo)}</div>
+    <div class="panel"><div class="panelHead"><h2>🕊️ වසරක් තුළ - විශ්‍රාම යාම</h2></div>${renderMiniList(ret)}</div>
+  `;
+}
+
+/* ---------- EMPLOYEES VIEW ---------- */
+function renderEmployees(){
+  let list = EMPLOYEES.slice();
+  if(categoryFilter!=='all') list = list.filter(e => (e.staffCategory||'regular')===categoryFilter);
+  if(searchTerm){
+    const s = searchTerm.toLowerCase();
+    list = list.filter(e => (e.name||'').toLowerCase().includes(s) || (e.fileNo||'').toLowerCase().includes(s) || (e.position||'').toLowerCase().includes(s) || (e.nic||'').toLowerCase().includes(s));
+  }
+  list.sort((a,b)=>{
+    const va = (a[sortState.col]||'').toString(); const vb=(b[sortState.col]||'').toString();
+    return va.localeCompare(vb, 'si') * sortState.dir;
+  });
+  const canEdit = CURRENT_USER.role === 'admin';
+  const filterBtn = (val,label)=>`<button class="btn ${categoryFilter===val?'btn-gold':'btn-ghost'} btn-sm" onclick="categoryFilter='${val}'; render();">${label}</button>`;
+  return `
+    <div class="topbar">
+      <div><h1>සේවක ලේඛන</h1><div class="sub">මුළු ලේඛන: ${EMPLOYEES.length}</div></div>
+      ${canEdit?`<button class="btn btn-gold btn-sm" onclick="openEmployeeModal()">+ නව ලේඛනයක්</button>`:''}
+    </div>
+    <div class="panel">
+      <div class="toolbar">
+        ${filterBtn('all','සියල්ල')} ${filterBtn('regular','ස්ථිර/සාමාන්‍ය')} ${filterBtn('junior','කණිෂ්ඨ කාර්ය මණ්ඩලය')}
+        <input type="text" placeholder="🔍 නම, ලිපි අංකය, තනතුර හෝ ජා.හැ. අංකයෙන් සොයන්න..." value="${escapeHtml(searchTerm)}" oninput="searchTerm=this.value; render();" style="flex:1;min-width:220px">
+        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">⬇ CSV බාගන්න</button>
+      </div>
+      ${list.length===0 ? `<div class="empty">ලේඛන හමු නොවුණි. ${canEdit?'"+ නව ලේඛනයක්" ක්ලික් කර එකතු කරන්න.':''}</div>` : `
+      <table><thead><tr>
+        <th onclick="toggleSort('fileNo')">ලිපි අංකය</th>
+        <th onclick="toggleSort('name')">නම</th>
+        <th onclick="toggleSort('position')">තනතුර</th>
+        <th onclick="toggleSort('grade')">ශ්‍රේණිය</th>
+        <th onclick="toggleSort('incrementDate')">ඊළඟ වැටුප් වර්ධක දිනය</th>
+        <th class="noPrint">ක්‍රියා</th>
+      </tr></thead><tbody>
+        ${list.map(e=>{
+          const alertDays = getIncrementAlerts(2).find(a=>a.emp.id===e.id);
+          return `<tr>
+            <td><span class="folderTab">${escapeHtml(e.fileNo||'-')}</span></td>
+            <td>${escapeHtml(e.name||'-')} ${e.staffCategory==='junior'?'<span class="pill officer" style="margin-left:6px">කණිෂ්ඨ</span>':''}</td>
+            <td>${escapeHtml(e.position||'-')}</td>
+            <td>${escapeHtml(e.grade||'-')}</td>
+            <td>${e.incrementDate ? fmtDate(nextAnnualOccurrence(e.incrementDate)) : '—'} ${alertDays?`<span class="tag tag-soon">දින ${alertDays.days}</span>`:''}</td>
+            <td class="noPrint">
+              <button class="btn btn-ghost btn-sm" onclick="viewProfile('${e.id}')">👁</button>
+              ${canEdit?`<button class="btn btn-ghost btn-sm" onclick="openEmployeeModal('${e.id}')">✎</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteEmployee('${e.id}')">🗑</button>`:''}
+            </td>
+          </tr>`;
+        }).join('')}
+      </tbody></table>`}
+    </div>
+  `;
+}
+function toggleSort(col){
+  if(sortState.col===col) sortState.dir *= -1; else { sortState.col=col; sortState.dir=1; }
+  render();
+}
+
+/* ---------- EMPLOYEE MODAL (add/edit) ---------- */
+let modalState = {effBarExams:[], promotions:[], eduQualifications:[]};
+
+function openEmployeeModal(id){
+  const emp = id ? EMPLOYEES.find(e=>e.id===id) : null;
+  const isEdit = !!emp;
+  const data = emp || {staffCategory:'regular'};
+  modalState = {
+    effBarExams: (data.effBarExams || []).map(x=>({...x})),
+    promotions: (data.promotions || []).map(x=>({...x})),
+    eduQualifications: (data.eduQualifications || []).map(x=>({...x})),
+  };
+
+  const simpleField = (f)=>{
+    const val = data[f.k] || '';
+    if(f.k==='notes'){
+      return `<div class="field" style="grid-column:1/-1"><label>${f.label}</label><textarea id="f_${f.k}" rows="2">${escapeHtml(val)}</textarea></div>`;
+    }
+    if(f.withDoneCheckbox){
+      const done = !!data[f.k+'Done'];
+      return `<div class="field">
+        <label>${f.label}</label>
+        <label style="display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:13px;font-weight:600">
+          <input type="checkbox" id="f_${f.k}Done" ${done?'checked':''}> විභාගය කර ඇත
+        </label>
+        <input type="date" id="f_${f.k}" value="${escapeHtml(val)}">
+      </div>`;
+    }
+    if(f.customPosition){
+      const isCustom = val && !POSITIONS.includes(val);
+      const opts = POSITIONS.map(p=>`<option value="${escapeHtml(p)}" ${val===p?'selected':''}>${escapeHtml(p)}</option>`).join('');
+      return `<div class="field">
+        <label>${f.label}</label>
+        <select id="f_position_select" onchange="onPositionSelectChange()">
+          <option value="" ${!val?'selected':''}>-- තෝරන්න --</option>
+          ${opts}
+          <option value="__other__" ${isCustom?'selected':''}>➕ අලුත් තනතුරක් එකතු කරන්න</option>
+        </select>
+        <input type="text" id="f_position" value="${escapeHtml(val)}" placeholder="නව තනතුර නම යොදන්න" style="margin-top:6px;${isCustom?'':'display:none;'}">
+      </div>`;
+    }
+    if(f.select){
+      return `<div class="field"><label>${f.label}</label><select id="f_${f.k}" onchange="toggleStaffCategory()">
+        ${f.options.map(([v,l])=>`<option value="${v}" ${val===v?'selected':''}>${l}</option>`).join('')}
+      </select></div>`;
+    }
+    return `<div class="field"><label>${f.label}</label><input type="${f.date?'date':'text'}" id="f_${f.k}" value="${escapeHtml(val)}"></div>`;
+  };
+
+  const topFields = FIELD_DEFS.filter(f=>!f.regularOnly && !f.juniorOnly && f.k!=='notes').map(simpleField).join('');
+  const regularFields = FIELD_DEFS.filter(f=>f.regularOnly).map(simpleField).join('');
+  const juniorFields = FIELD_DEFS.filter(f=>f.juniorOnly).map(simpleField).join('');
+  const notesField = FIELD_DEFS.filter(f=>f.k==='notes').map(simpleField).join('');
+  const cat = data.staffCategory || 'regular';
+
+  document.getElementById('modalContent').innerHTML = `
+    <h2>${isEdit?'ලේඛනය සංස්කරණය':'නව සේවක ලේඛනයක්'}</h2>
+    <div class="grid2">${topFields}</div>
+
+    <div id="regularFieldsBlock" style="display:${cat==='regular'?'':'none'}">
+      <div class="grid2" style="margin-top:6px">${regularFields}</div>
+
+      <div style="margin-top:14px">
+        <label style="display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;font-weight:600">කාර්යක්ෂමතා කඩඉම් විභාග සමත් වූ දිනයන්</label>
+        <div id="effBarContainer"></div>
+      </div>
+      <div style="margin-top:14px">
+        <label style="display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;font-weight:600">උසස් වූ දිනයන්</label>
+        <div id="promotionContainer"></div>
+      </div>
+    </div>
+
+    <div id="juniorFieldsBlock" style="display:${cat==='junior'?'':'none'}">
+      <div class="grid2" style="margin-top:6px">${juniorFields}</div>
+    </div>
+
+    <div style="margin-top:14px">
+      <label style="display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;font-weight:600">අධ්‍යාපන සුදුසුකම්</label>
+      <div id="eduQualContainer"></div>
+    </div>
+
+    <div class="grid2" style="margin-top:14px">${notesField}</div>
+
+    <div class="modalActions">
+      <button class="btn btn-ghost" onclick="closeModal()">අවලංගු කරන්න</button>
+      <button class="btn btn-primary" onclick="saveEmployee('${isEdit?emp.id:''}')">💾 සුරකින්න</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+  renderRomanDateList('effBarExams','effBarContainer','කඩඉම් විභාගයක්');
+  renderRomanDateList('promotions','promotionContainer','උසස්වීමක්');
+  renderEduQualList();
+}
+
+function toggleStaffCategory(){
+  const val = document.getElementById('f_staffCategory').value;
+  document.getElementById('regularFieldsBlock').style.display = (val==='regular') ? '' : 'none';
+  document.getElementById('juniorFieldsBlock').style.display = (val==='junior') ? '' : 'none';
+}
+function onPositionSelectChange(){
+  const sel = document.getElementById('f_position_select').value;
+  const inp = document.getElementById('f_position');
+  if(sel === '__other__'){
+    inp.style.display = '';
+    inp.value = '';
+    inp.focus();
+  } else {
+    inp.style.display = 'none';
+    inp.value = sel;
+  }
+}
+
+const ROMAN_OPTIONS = [1,2,3,4,5,6,7,8,9,10];
+function renderRomanDateList(key, containerId, addLabel){
+  const arr = modalState[key];
+  let html = arr.map((item,idx)=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <select onchange="modalState.${key}[${idx}].no=parseInt(this.value)" style="width:78px;padding:8px 6px;border:1.5px solid var(--line);border-radius:8px;font-weight:700;text-align:center">
+        ${ROMAN_OPTIONS.map(n=>`<option value="${n}" ${(item.no||idx+1)===n?'selected':''}>${toRoman(n)}</option>`).join('')}
+      </select>
+      <input type="date" value="${item.date||''}" onchange="modalState.${key}[${idx}].date=this.value" style="flex:1;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px">
+      <button type="button" class="btn btn-danger btn-sm" onclick="removeListItem('${key}',${idx})">✕</button>
+    </div>`).join('');
+  if(!arr.length) html = `<div style="font-size:13px;color:var(--ink-soft);margin-bottom:6px">තවම එකතු කර නොමැත.</div>`;
+  html += `<button type="button" class="btn btn-ghost btn-sm" onclick="addListItem('${key}')">+ ${addLabel} එකතු කරන්න</button>`;
+  document.getElementById(containerId).innerHTML = html;
+}
+
+function renderEduQualList(){
+  const arr = modalState.eduQualifications;
+  let html = arr.map((item,idx)=>`
+    <div style="border:1.5px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px">
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <input type="text" placeholder="සුදුසුකම (උදා: G.C.E. A/L, ඩිප්ලෝමාව, උපාධිය)" value="${escapeHtml(item.name)}" oninput="modalState.eduQualifications[${idx}].name=this.value" style="flex:1;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px">
+        <button type="button" class="btn btn-danger btn-sm" onclick="removeListItem('eduQualifications',${idx})">✕</button>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <label style="font-size:12.5px;display:flex;align-items:center;gap:4px">
+          <input type="checkbox" ${item.isDegree?'checked':''} onchange="modalState.eduQualifications[${idx}].isDegree=this.checked; renderEduQualList();"> උපාධියක්ද?
+        </label>
+        ${item.isDegree?`<span style="display:flex;align-items:center;gap:4px">
+          <span style="font-size:12.5px;color:var(--ink-soft)">උපාධිය වලංගු දිනය</span>
+          <input type="date" value="${item.validDate||''}" onchange="modalState.eduQualifications[${idx}].validDate=this.value" style="padding:6px 8px;border:1.5px solid var(--line);border-radius:6px">
+        </span>`:''}
+      </div>
+    </div>`).join('');
+  if(!arr.length) html += `<div style="font-size:13px;color:var(--ink-soft);margin-bottom:6px">තවම සුදුසුකම් එකතු කර නොමැත.</div>`;
+  html += `<button type="button" class="btn btn-ghost btn-sm" onclick="addListItem('eduQualifications')">+ සුදුසුකමක් එකතු කරන්න</button>`;
+  document.getElementById('eduQualContainer').innerHTML = html;
+}
+
+function addListItem(key){
+  if(key==='eduQualifications') modalState.eduQualifications.push({name:'', isDegree:false, validDate:''});
+  else {
+    const used = modalState[key].map(x=>x.no||0);
+    const nextNo = used.length ? Math.max(...used)+1 : 1;
+    modalState[key].push({no: Math.min(nextNo,10), date:''});
+  }
+  if(key==='effBarExams') renderRomanDateList('effBarExams','effBarContainer','කඩඉම් විභාගයක්');
+  else if(key==='promotions') renderRomanDateList('promotions','promotionContainer','උසස්වීමක්');
+  else renderEduQualList();
+}
+function removeListItem(key, idx){
+  modalState[key].splice(idx,1);
+  if(key==='effBarExams') renderRomanDateList('effBarExams','effBarContainer','කඩඉම් විභාගයක්');
+  else if(key==='promotions') renderRomanDateList('promotions','promotionContainer','උසස්වීමක්');
+  else renderEduQualList();
+}
+
+async function saveEmployee(id){
+  const rec = {};
+  FIELD_DEFS.forEach(f=> rec[f.k] = document.getElementById('f_'+f.k).value.trim());
+  FIELD_DEFS.forEach(f=>{ if(f.withDoneCheckbox){ const el = document.getElementById('f_'+f.k+'Done'); rec[f.k+'Done'] = el ? el.checked : false; } });
+  if(!rec.name){ toast('නම අනිවාර්යයි.'); return; }
+  await addPositionIfNew(rec.position);
+  rec.effBarExams = modalState.effBarExams.filter(x=>x.date);
+  rec.promotions = modalState.promotions.filter(x=>x.date);
+  rec.eduQualifications = modalState.eduQualifications.filter(x=>x.name);
+  if(id){
+    const idx = EMPLOYEES.findIndex(e=>e.id===id);
+    EMPLOYEES[idx] = {...EMPLOYEES[idx], ...rec, updatedAt: Date.now(), updatedBy: CURRENT_USER.username};
+    await logAction('edit_employee', `${rec.name} (${id})`);
+  } else {
+    const newRec = {id: uid(), ...rec, createdAt: Date.now(), updatedAt: Date.now(), updatedBy: CURRENT_USER.username};
+    EMPLOYEES.push(newRec);
+    await logAction('add_employee', `${rec.name} (${newRec.id})`);
+  }
+  await storeSet(K_EMP, EMPLOYEES);
+  closeModal();
+  render();
+  toast('සුරකින ලදී.');
+}
+async function deleteEmployee(id){
+  const emp = EMPLOYEES.find(e=>e.id===id);
+  if(!confirm(`"${emp.name}" ගේ ලේඛනය මකා දැමීමට තහවුරු කරන්නද?`)) return;
+  EMPLOYEES = EMPLOYEES.filter(e=>e.id!==id);
+  await storeSet(K_EMP, EMPLOYEES);
+  await logAction('delete_employee', `${emp.name} (${id})`);
+  render();
+  toast('ලේඛනය මකා දමන ලදී.');
+}
+function viewProfile(id){
+  const e = EMPLOYEES.find(x=>x.id===id);
+  const cat = e.staffCategory || 'regular';
+  const rows = FIELD_DEFS.filter(f=>{
+    if(f.regularOnly && cat!=='regular') return false;
+    if(f.juniorOnly && cat!=='junior') return false;
+    return true;
+  }).map(f=>{
+    let display;
+    if(f.select) display = (f.options.find(([v])=>v===e[f.k])||[,e[f.k]])[1] || '—';
+    else if(f.withDoneCheckbox) display = `${e[f.k+'Done']?'ඔව්':'නැත'}${e[f.k]?' — '+fmtDate(e[f.k]):''}`;
+    else display = f.date ? fmtDate(e[f.k]) : (escapeHtml(e[f.k]||'—'));
+    return `<div class="profileRow"><div class="k">${f.label}</div><div class="v">${display}</div></div>`;
+  }).join('');
+
+  let extra = '';
+  if(cat==='regular'){
+    const barRows = (e.effBarExams||[]).slice().sort((a,b)=>(a.no||0)-(b.no||0)).map((x,idx)=>`<div class="profileRow"><div class="k">කාර්යක්ෂමතා කඩඉම් විභාගය ${toRoman(x.no||idx+1)}</div><div class="v">${fmtDate(x.date)}</div></div>`).join('') || `<div class="profileRow"><div class="k">කාර්යක්ෂමතා කඩඉම් විභාග</div><div class="v">—</div></div>`;
+    const promoRows = (e.promotions||[]).slice().sort((a,b)=>(a.no||0)-(b.no||0)).map((x,idx)=>`<div class="profileRow"><div class="k">උසස් වූ දිනය ${toRoman(x.no||idx+1)}</div><div class="v">${fmtDate(x.date)}</div></div>`).join('') || `<div class="profileRow"><div class="k">උසස්වීම්</div><div class="v">—</div></div>`;
+    extra += barRows + promoRows;
+  }
+  const eduRows = (e.eduQualifications||[]).map(x=>`<div class="profileRow"><div class="k">${escapeHtml(x.name||'සුදුසුකම')}</div><div class="v">${x.isDegree?`උපාධියක් — වලංගු දිනය: ${fmtDate(x.validDate)}`:'—'}</div></div>`).join('') || `<div class="profileRow"><div class="k">අධ්‍යාපන සුදුසුකම්</div><div class="v">—</div></div>`;
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="profileSheet" id="printArea">
+      <h3>${escapeHtml(e.name)} — පුද්ගලික ලිපි ලේඛනය</h3>
+      ${rows}
+      ${extra}
+      ${eduRows}
+    </div>
+    <div class="modalActions">
+      <button class="btn btn-ghost" onclick="closeModal()">වසන්න</button>
+      <button class="btn btn-gold" onclick="window.print()">🖨 මුද්‍රණය</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); }
+
+/* ---------- REPORTS ---------- */
+function renderReports(){
+  return `
+    <div class="topbar"><div><h1>වාර්තා</h1><div class="sub">දත්ත බාගත කිරීම් සහ මුද්‍රණය</div></div></div>
+    <div class="panel">
+      <div class="panelHead"><h2>සියලු සේවක ලේඛන (CSV)</h2></div>
+      <p style="font-size:13.5px;color:var(--ink-soft)">Excel හෝ Google Sheets මගින් විවෘත කළ හැකි සම්පූර්ණ ලේඛන ගොනුවක් බාගන්න.</p>
+      <button class="btn btn-gold btn-sm" onclick="exportCSV()">⬇ සියලු ලේඛන CSV ලෙස බාගන්න</button>
+    </div>
+    <div class="panel">
+      <div class="panelHead"><h2>වැටුප් වර්ධක දින වාර්තාව (දින 60ක්)</h2></div>
+      ${renderMiniList(getUpcomingByField('incrementDate',60,true))}
+    </div>
+  `;
+}
+function flattenDateList(list){
+  return (list||[]).slice().sort((a,b)=>(a.no||0)-(b.no||0)).map((x,idx)=>`${toRoman(x.no||idx+1)}:${x.date||''}`).join(' | ');
+}
+function flattenEduList(list){
+  return (list||[]).map(x=>`${x.name||''}${x.isDegree?' [උපාධියක් - වලංගු: '+(x.validDate||'')+']':''}`).join(' | ');
+}
+function exportCSV(){
+  const headers = [...FIELD_DEFS.map(f=>f.label), 'කාර්යක්ෂමතා කඩඉම් විභාග', 'උසස්වීම්', 'අධ්‍යාපන සුදුසුකම්'];
+  const rows = EMPLOYEES.map(e=>{
+    const base = FIELD_DEFS.map(f=>{
+      let v = e[f.k]||'';
+      if(f.select) v = (f.options.find(([val])=>val===v)||[,v])[1] || v;
+      if(f.withDoneCheckbox) v = `${e[f.k+'Done']?'ඔව්':'නැත'}${v?' - '+v:''}`;
+      return `"${v.toString().replace(/"/g,'""')}"`;
+    });
+    base.push(`"${flattenDateList(e.effBarExams).replace(/"/g,'""')}"`);
+    base.push(`"${flattenDateList(e.promotions).replace(/"/g,'""')}"`);
+    base.push(`"${flattenEduList(e.eduQualifications).replace(/"/g,'""')}"`);
+    return base.join(',');
+  });
+  const csv = '\uFEFF'+headers.map(h=>`"${h}"`).join(',') + '\n' + rows.join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'sewaka-lekhana-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click(); URL.revokeObjectURL(url);
+  logAction('export_csv', `${EMPLOYEES.length} records`);
+}
+
+/* ---------- USERS (admin only) ---------- */
+function renderUsers(){
+  if(CURRENT_USER.role!=='admin') return `<div class="empty">ප්‍රවේශය අවශ්‍ය මට්ටමින් නොමැත.</div>`;
+  return `
+    <div class="topbar">
+      <div><h1>පරිශීලක කළමනාකරණය</h1><div class="sub">පද්ධතියට පිවිසිය හැකි නිලධාරීන්</div></div>
+      <button class="btn btn-gold btn-sm" onclick="openUserModal()">+ නව පරිශීලකයෙක්</button>
+    </div>
+    <div class="panel">
+      <table><thead><tr><th>නම</th><th>පරිශීලක නාමය</th><th>භූමිකාව</th><th class="noPrint">ක්‍රියා</th></tr></thead><tbody>
+      ${USERS.map(u=>`<tr>
+        <td>${escapeHtml(u.displayName)}</td>
+        <td>${escapeHtml(u.username)}</td>
+        <td><span class="pill ${u.role}">${u.role==='admin'?'පරිපාලක':'විෂය බාර නිලධාරී'}</span></td>
+        <td class="noPrint">
+          <button class="btn btn-ghost btn-sm" onclick="resetUserPassword('${u.username}')">🔑 මුරපදය යළි සකසන්න</button>
+          ${u.username!==CURRENT_USER.username?`<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.username}')">🗑</button>`:''}
+        </td>
+      </tr>`).join('')}
+      </tbody></table>
+    </div>
+  `;
+}
+function openUserModal(){
+  document.getElementById('modalContent').innerHTML = `
+    <h2>නව පරිශීලකයෙක් එකතු කරන්න</h2>
+    <div class="grid2">
+      <div class="field"><label>සම්පූර්ණ නම</label><input id="nu_name" type="text"></div>
+      <div class="field"><label>පරිශීලක නාමය</label><input id="nu_user" type="text"></div>
+      <div class="field"><label>මුරපදය</label><input id="nu_pass" type="password"></div>
+      <div class="field"><label>භූමිකාව</label>
+        <select id="nu_role"><option value="officer">විෂය බාර නිලධාරී</option><option value="admin">පරිපාලක</option></select>
+      </div>
+    </div>
+    <div class="modalActions">
+      <button class="btn btn-ghost" onclick="closeModal()">අවලංගු කරන්න</button>
+      <button class="btn btn-primary" onclick="saveNewUser()">💾 සුරකින්න</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+async function saveNewUser(){
+  const name = document.getElementById('nu_name').value.trim();
+  const uname = document.getElementById('nu_user').value.trim();
+  const pass = document.getElementById('nu_pass').value;
+  const role = document.getElementById('nu_role').value;
+  if(!name || !uname || !pass){ toast('සියලු ක්ෂේත්‍ර පුරවන්න.'); return; }
+  if(USERS.some(u=>u.username.toLowerCase()===uname.toLowerCase())){ toast('මෙම පරිශීලක නාමය දැනටමත් භාවිතයේ ඇත.'); return; }
+  const passHash = await sha256(pass);
+  USERS.push({username:uname, passHash, role, displayName:name, mustChangePassword:true});
+  await storeSet(K_USERS, USERS);
+  await logAction('add_user', uname);
+  closeModal(); render(); toast('පරිශීලකයා එකතු කරන ලදී.');
+}
+async function resetUserPassword(username){
+  const np = prompt('නව මුරපදය යොදන්න:');
+  if(!np) return;
+  const idx = USERS.findIndex(u=>u.username===username);
+  USERS[idx].passHash = await sha256(np);
+  USERS[idx].mustChangePassword = true;
+  await storeSet(K_USERS, USERS);
+  await logAction('reset_password', username);
+  toast('මුරපදය යළි සකසන ලදී.');
+}
+async function deleteUser(username){
+  if(!confirm(`"${username}" මකා දැමීමට තහවුරු කරන්නද?`)) return;
+  USERS = USERS.filter(u=>u.username!==username);
+  await storeSet(K_USERS, USERS);
+  await logAction('delete_user', username);
+  render(); toast('පරිශීලකයා ඉවත් කරන ලදී.');
+}
+
+/* ---------- AUDIT LOG ---------- */
+function renderAudit(){
+  if(CURRENT_USER.role!=='admin') return `<div class="empty">ප්‍රවේශය අවශ්‍ය මට්ටමින් නොමැත.</div>`;
+  return `
+    <div class="topbar"><div><h1>ක්‍රියා සටහන</h1><div class="sub">පද්ධතියේ සිදුවීම් ඉතිහාසය (පසුගිය සටහන් 300)</div></div></div>
+    <div class="panel">
+      ${AUDIT.length===0?`<div class="empty">තවම සටහන් නොමැත.</div>`:`
+      <table><thead><tr><th>වේලාව</th><th>පරිශීලකයා</th><th>ක්‍රියාව</th><th>විස්තර</th></tr></thead><tbody>
+      ${AUDIT.map(a=>`<tr><td>${new Date(a.ts).toLocaleString('si-LK')}</td><td>${escapeHtml(a.user)}</td><td>${escapeHtml(a.action)}</td><td>${escapeHtml(a.detail||'')}</td></tr>`).join('')}
+      </tbody></table>`}
+    </div>
+  `;
+}
+
+/* ---------- ACCOUNT ---------- */
+function renderAccount(){
+  return `
+    <div class="topbar"><div><h1>මගේ ගිණුම</h1><div class="sub">${escapeHtml(CURRENT_USER.displayName)} (${escapeHtml(CURRENT_USER.username)})</div></div></div>
+    <div class="panel" style="max-width:420px">
+      <div class="panelHead"><h2>මුරපදය වෙනස් කරන්න</h2></div>
+      <div class="field"><label>වත්මන් මුරපදය</label><input type="password" id="acc_old"></div>
+      <div class="field"><label>නව මුරපදය</label><input type="password" id="acc_new"></div>
+      <button class="btn btn-primary" style="width:auto" onclick="changeOwnPassword()">යාවත්කාලීන කරන්න</button>
+    </div>
+    <div class="panel" style="max-width:420px">
+      <div class="panelHead"><h2>බ්‍රව්සර දැනුම්දීම්</h2></div>
+      <p style="font-size:13px;color:var(--ink-soft)">තත්ත්වය: <b>${('Notification' in window)?Notification.permission:'ලබා නොදේ'}</b></p>
+      <button class="btn btn-ghost btn-sm" onclick="requestBrowserNotifPermission()">දැනුම්දීම් සක්‍රීය කරන්න</button>
+    </div>
+  `;
+}
+async function changeOwnPassword(){
+  const oldp = document.getElementById('acc_old').value;
+  const newp = document.getElementById('acc_new').value;
+  const oldHash = await sha256(oldp);
+  if(oldHash !== CURRENT_USER.passHash){ toast('වත්මන් මුරපදය වැරදියි.'); return; }
+  if(!newp || newp.length<4){ toast('නව මුරපදය අඩුම වශයෙන් අකුරු 4ක් විය යුතුය.'); return; }
+  const idx = USERS.findIndex(u=>u.username===CURRENT_USER.username);
+  USERS[idx].passHash = await sha256(newp);
+  USERS[idx].mustChangePassword = false;
+  await storeSet(K_USERS, USERS);
+  CURRENT_USER = USERS[idx];
+  await logAction('change_password', CURRENT_USER.username);
+  toast('මුරපදය සාර්ථකව වෙනස් කරන ලදී.');
+  document.getElementById('acc_old').value=''; document.getElementById('acc_new').value='';
+}
+
+/* ---------- UTIL ---------- */
+function escapeHtml(s){
+  return (s||'').toString().replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+document.getElementById('modalOverlay').addEventListener('click', e=>{
+  if(e.target.id==='modalOverlay') closeModal();
+});
+</script>
+</body>
+</html>
